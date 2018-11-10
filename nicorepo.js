@@ -3,6 +3,16 @@
 var num_pages = 10;
 var jsons = [];
 var cursor = '';
+var smartphone = 'sp.nicovideo.jp' == location.hostname;
+
+if (smartphone)
+{
+	document.open();
+	document.write('<a href="https://www.nicovideo.jp/my/top">PCページ</a>で実行してください</a>');
+	document.close();
+	return;
+}
+
 document.write('loading:[' + ':::'.repeat(num_pages) + ']<br>');
 
 function loader(index)
@@ -25,16 +35,15 @@ function loader(index)
 			loader(index + 1);
 		}
 	};
-	var url = "https://www.nicovideo.jp/api/nicorepo/timeline/my/all?" + cursor + "client_app=pc_myrepo&_=" + Date.now();
+	var url = "https://" + location.hostname + "/api/nicorepo/timeline/my/all?" + cursor + "client_app=pc_myrepo&_=" + Date.now();
 	xhr.open('GET', url);
 	xhr.send();
 }
 
 function output()
 {
-	var output = '';
-
-	output += '<hr>動画投稿<hr>\n';
+	var output = '<a target="_blank" href="https://www.nicovideo.jp/user/78823020/video"><img src="https://tn.smilevideo.jp/smile?i=32892185" align="left">広告：鈴音のピンクなボイロ動画一覧はこちら</a><br clear="all">';
+	output += '<hr>最近の動画投稿<hr>\n';
 	for(var i = 0; i < jsons.length; i++)
 	{
 		var js = jsons[i];
